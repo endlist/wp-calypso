@@ -22,7 +22,7 @@ import {
 	isJetpackBusiness
 } from 'lib/products-values';
 import { removeNotice, errorNotice } from 'state/notices/actions';
-import { isJetpackModuleActive, isJetpackMinimumVersion } from 'state/sites/selectors';
+import { getSiteOption, isJetpackModuleActive, isJetpackMinimumVersion } from 'state/sites/selectors';
 import { isEnabled } from 'config';
 import { FEATURE_GOOGLE_ANALYTICS } from 'lib/plans/constants';
 
@@ -64,6 +64,7 @@ class GoogleAnalyticsForm extends Component {
 			handleSubmitForm,
 			isRequestingSettings,
 			isSavingSettings,
+			jetpackManagementUrl,
 			jetpackModuleActive,
 			jetpackVersionSupportsModule,
 			showUpgradeNudge,
@@ -114,7 +115,7 @@ class GoogleAnalyticsForm extends Component {
 						status="is-warning"
 						showDismiss={ false }
 						text={ translate( 'The Google Analytics module is disabled in Jetpack.' ) } >
-						<NoticeAction href={ '//' + domain + '/wp-admin/admin.php?page=jetpack#/engagement' }>
+						<NoticeAction href={ jetpackManagementUrl + 'admin.php?page=jetpack#/engagement' }>
 							{ translate( 'Enable' ) }
 						</NoticeAction>
 					</Notice>
@@ -198,6 +199,7 @@ const mapStateToProps = ( state, ownProps ) => {
 	const { site } = ownProps;
 
 	const isGoogleAnalyticsEligible = site && site.plan && hasBusinessPlan( site.plan );
+	const jetpackManagementUrl = getSiteOption( state, site.ID, 'admin_url' );
 	const jetpackModuleActive = isJetpackModuleActive( state, site.ID, 'google-analytics' );
 	const jetpackVersionSupportsModule = isJetpackMinimumVersion( state, site.ID, '4.6-alpha' );
 	const googleAnalyticsEnabled = site && (
@@ -209,6 +211,7 @@ const mapStateToProps = ( state, ownProps ) => {
 		selectedSite: site,
 		showUpgradeNudge: ! isGoogleAnalyticsEligible,
 		enableForm: isGoogleAnalyticsEligible && googleAnalyticsEnabled,
+		jetpackManagementUrl,
 		jetpackModuleActive,
 		jetpackVersionSupportsModule,
 	};
