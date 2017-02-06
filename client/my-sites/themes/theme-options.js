@@ -84,13 +84,7 @@ const tryandcustomize = {
 	} ),
 	action: tryAndCustomizeTheme,
 	hideForSite: ( state, siteId ) => ! canCurrentUser( state, siteId, 'edit_theme_options' ),
-	hideForTheme: ( state, theme, siteId ) => (
-		isActive( state, theme.id, siteId ) || (
-			isJetpackSite( state, siteId ) &&
-			isPremium( state, theme.id ) &&
-			! hasFeature( state, siteId, FEATURE_UNLIMITED_PREMIUM_THEMES ) // Pressable sites included -- they're always on a Business plan
-		)
-	)
+	hideForTheme: ( state, theme, siteId ) => isActive( state, theme.id, siteId )
 };
 
 // This is a special option that gets its `action` added by `ThemeShowcase` or `ThemeSheet`,
