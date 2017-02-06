@@ -128,6 +128,14 @@ const preview = {
 	hideForTheme: ( state, theme, siteId ) => isActive( state, theme.id, siteId )
 };
 
+const previewOnJetpack = {
+	label: i18n.translate( 'Live demo on Jetpack', {
+		comment: 'label for previewing the theme demo website'
+	} ),
+	action: ( themeId, siteId ) => requestPreview( themeId, siteId ),
+	hideForTheme: ( state, theme, siteId ) => isActive( state, theme.id, siteId )
+};
+
 const signup = {
 	label: i18n.translate( 'Pick this design', {
 		comment: 'when signing up for a WordPress.com account with a selected theme'
@@ -163,6 +171,7 @@ const help = {
 const ALL_THEME_OPTIONS = {
 	customize,
 	preview,
+	previewOnJetpack,
 	purchase,
 	activate,
 	activateOnJetpack,
