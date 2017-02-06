@@ -11,8 +11,8 @@ import { has, identity, mapValues, pick, pickBy } from 'lodash';
  */
 import config from 'config';
 import {
-	activate as activateTheme,
-	tryAndCustomize as tryAndCustomizeTheme,
+	activate as activateAction,
+	tryAndCustomize as tryAndCustomizeAction,
 	confirmDelete,
 } from 'state/themes/actions';
 import {
@@ -51,7 +51,7 @@ const purchase = config.isEnabled( 'upgrades/checkout' )
 const activate = {
 	label: i18n.translate( 'Activate' ),
 	header: i18n.translate( 'Activate on:', { comment: 'label for selecting a site on which to activate a theme' } ),
-	action: activateTheme,
+	action: activateAction,
 	hideForTheme: ( state, theme, siteId ) => (
 		isActive( state, theme.id, siteId ) || (
 			isPremium( state, theme.id ) &&
@@ -82,7 +82,7 @@ const tryandcustomize = {
 	header: i18n.translate( 'Try & Customize on:', {
 		comment: 'label in the dialog for opening the Customizer with the theme in preview'
 	} ),
-	action: tryAndCustomizeTheme,
+	action: tryAndCustomizeAction,
 	hideForSite: ( state, siteId ) => ! canCurrentUser( state, siteId, 'edit_theme_options' ),
 	hideForTheme: ( state, theme, siteId ) => isActive( state, theme.id, siteId )
 };
